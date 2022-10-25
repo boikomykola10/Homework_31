@@ -27,8 +27,26 @@ public class LogicTest {
     }
 
     @Test
-    public void MyTest() throws InterruptedException {
-        // відкрити категорію "Ноутбуки и компьютеры"
+    public void pageObject() {
+        MainPageLogic mainPageLogic = new MainPageLogic(driver, wait);
+        mainPageLogic.laptopsAndComputersBtnClick();
+        mainPageLogic.laptopsBtnClick();
+        CategoryPageLogic categoryPageLogic = new CategoryPageLogic(driver, wait);
+        categoryPageLogic.firstProductClick();
+        String number = categoryPageLogic.checkNumberInBasket();
+        Assert.assertEquals(number, "1");
+        String productTitle = categoryPageLogic.firstProductTitleText();
+        categoryPageLogic.basketBtnClick();
+        BasketPage basketPage = new BasketPage(driver, wait);
+        String productTitleInBasket = basketPage.productTitleInBasket();
+        Assert.assertEquals(productTitleInBasket, productTitle);
+
+
+
+
+
+
+        /*// відкрити категорію "Ноутбуки и компьютеры"
         WebElement laptopsAndComputers = driver.findElement(
                 By.xpath("/html/body/app-root/div/div/rz-main-page/div/main/rz-main-page-content/rz-app-fat-menu-tablet/nav/ul/li[1]/a"));
         JavascriptExecutor jse = (JavascriptExecutor) driver;
@@ -72,7 +90,7 @@ public class LogicTest {
         System.out.println(productTitleFromBasket);
 
         // перевірити чи в корзину добавився правильний товар
-        Assert.assertEquals(productTitleFromBasket, firstProductTitle);
+        Assert.assertEquals(productTitleFromBasket, firstProductTitle);*/
     }
 
     @AfterMethod
